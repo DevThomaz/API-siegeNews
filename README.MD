@@ -1,0 +1,1 @@
+O intuito desse projeto e aprender a MERN Stack
