@@ -2,7 +2,7 @@
 
 This project is a news website where users can view, comment on, and publish news (as long as they are logged in). The purpose of the project is to learn the MERN Stack.
 
-## Status: In Progress:hammer::hourglass_flowing_sand:
+## Status: In Progress:hammer:
 
 ## Tech Stack
 
