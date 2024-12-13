@@ -1,6 +1,7 @@
 {
   "name": "api-breakingnews",
   "version": "1.0.0",
+  "type":"module",
   "description": "O intuito desse projeto e aprender a MERN Stack",
   "main": "index.js",
   "scripts": {
