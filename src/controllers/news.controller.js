@@ -4,23 +4,6 @@ import {ObjectId} from "mongoose";
 
 const create = async  (req, res) => {
     try{
-        const {authorization} = req.headers;
-        if(!authorization){
-            return res.send(401);
-        };
-
-        const parts = authorization.split(" ");
-
-        
-        if (parts.length !== 2){
-            return res.sendStatus(401)
-        }
-        const [schema, token] = parts;
-        
-        if (schema !== "Bearer"){
-            return res.sendStatus(401)
-        }
-
         const {title, text, banner} = req.body;
 
         if(!title||!banner||!text){
@@ -33,7 +16,7 @@ const create = async  (req, res) => {
             title,
             text,
             banner,
-            user: {_id:"675c57fd70da8e50894b4556"},
+            user: req.userId,
         });
 
         res.sendStatus(201)
