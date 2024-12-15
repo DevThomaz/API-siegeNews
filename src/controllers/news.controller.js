@@ -5,7 +5,8 @@ import {
     topNewsService, 
     findByIdService,
     searchByTitleService,
-    byUserService
+    byUserService,
+    updateService
 } from "../services/news.service.js"
 import {ObjectId} from "mongoose";
 
@@ -18,7 +19,7 @@ export const create = async  (req, res) => {
             res.status(400).send({
                 message:"Submit all filds for posting",
             });
-        }
+        };
  
         await createService({
             title,
@@ -192,3 +193,36 @@ export const byUser = async(req, res) => {
         res.status(500).send({message: err.message});
     };
 };
+
+export const update = async(req, res) => {
+    try {
+        const {title, text, banner} = req.body;
+        const {id} = req.params;
+
+        if(!title && !banner && !text){
+            res.status(400).send({
+                message:"Submit at least one field to update the post",
+            });
+        }
+
+        const news = await findByIdService(id);
+
+        console.log(typeof news.user._id, typeof req.userId);
+
+        if(String(news.user._id) != String(req.userId)){
+            return res.status(400).send({
+                message:"You didn't create this post",
+            });
+        }
+
+        await updateService(id, title, text, banner);
+
+        return res.send({message:"Post successfully updated!"});
+
+    }catch(err){
+        res.status(500).send({message: err.message});
+    };
+};
+
+/* Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NWRlZGEyOWMxMzQ3ZmFiMTY1YjJmYiIsImlhdCI6MTczNDI2NTM3MCwiZXhwIjoxNzM0MzUxNzcwfQ.ZAlLyUj9f0TjKi0eSBu0IpxIOnzYljA1kOnzq_7fpKo */
+/* 675eca4c48551326b92bde15 */
