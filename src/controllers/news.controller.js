@@ -6,7 +6,8 @@ import {
     findByIdService,
     searchByTitleService,
     byUserService,
-    updateService
+    updateService,
+    eraseService
 } from "../services/news.service.js"
 import {ObjectId} from "mongoose";
 
@@ -207,8 +208,6 @@ export const update = async(req, res) => {
 
         const news = await findByIdService(id);
 
-        console.log(typeof news.user._id, typeof req.userId);
-
         if(String(news.user._id) != String(req.userId)){
             return res.status(400).send({
                 message:"You didn't create this post",
@@ -224,5 +223,20 @@ export const update = async(req, res) => {
     };
 };
 
-/* Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NWRlZGEyOWMxMzQ3ZmFiMTY1YjJmYiIsImlhdCI6MTczNDI2NTM3MCwiZXhwIjoxNzM0MzUxNzcwfQ.ZAlLyUj9f0TjKi0eSBu0IpxIOnzYljA1kOnzq_7fpKo */
-/* 675eca4c48551326b92bde15 */
+export const erase = async(req, res) => {
+    try{
+        const {id} = req.params;
+        const news = await findByIdService(id);
+
+        if(String(news.user._id) != String(req.userId)){
+            return res.status(400).send({
+                message:"You didn't create this post",
+            });
+        }
+        await eraseService(id);
+        return res.send({message: "Post deleted successfully!"})
+
+    }catch(err){
+        res.status(500).send({message: err.message});
+    };
+};
