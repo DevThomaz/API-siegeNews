@@ -1,5 +1,5 @@
 import express from "express";
-import cors from "cors"; // Adicione esta importação
+import cors from "cors"; 
 import connectDatabase from "./database/db.js";
 import dotenv from "dotenv";
 
@@ -13,11 +13,11 @@ dotenv.config();
 const port = process.env.PORT || 3000;
 const app = express();
 
-// Adicione esta configuração de CORS antes das rotas
+
 app.use(cors({
-  origin: 'http://localhost:5173', // URL do seu frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], // Métodos permitidos
-  allowedHeaders: ['Content-Type', 'Authorization'] // Cabeçalhos permitidos
+  origin: 'http://localhost:5173', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], 
+  allowedHeaders: ['Content-Type', 'Authorization'] 
 }));
 
 connectDatabase()
